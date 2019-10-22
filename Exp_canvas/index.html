@@ -1,0 +1,96 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-6">
+                <canvas style="width:100%;height:500px;border:1px solid red" id="canvas"></canvas>
+            </div>
+            <div class="col-6">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Please enter name</label>
+                        <input type="text" name="name" id="name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="surname">Please enter surname</label>
+                        <input type="text" name="name" id="surname" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="positions">Please select position</label>
+                        <select name="" id="positions" class="form-control">
+                            <option value="HR">HR</option>
+                            <option value="Developer">Developer</option>
+                            <option value="CEO">CEO</option>
+                        </select>
+                    </div>
+                    <img id="image" style="width:200px;height:200px;">
+                    <input type="file" class="d-none" id="file">
+                    <button type="submit" class="btn btn-success" style="display: block;margin-top:5px"
+                        id="addButton">Add</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+
+
+        $(document).ready(function () {
+            $("#image").click(function () {
+                $("#file").click();
+            })
+
+
+            $("#file").change(function () {
+                var preview = document.querySelector('img');
+                var file = document.querySelector('input[type=file]').files[0];
+                var reader = new FileReader();
+
+                reader.onloadend = function () {
+                    preview.src = reader.result;
+                }
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+                else {
+                    preview.src = "";
+                }
+            })
+
+
+
+
+            $("#addButton").click(function (e) {
+                e.preventDefault();
+                let canvas = document.getElementById("canvas");
+                let ctx = canvas.getContext("2d");
+                ctx.font = "12px Arial";
+                ctx.fillText($("#name").val(), 30, 20);
+                ctx.font = "12px Arial";
+                ctx.fillText($("#surname").val(), 30, 40);
+                ctx.font = "12px Arial";
+                ctx.fillText($("#positions").val(), 30, 60);
+                let img = document.getElementById("image")
+                ctx.drawImage(img, 30, 80,50,80);
+            })
+        })
+
+    </script>
+</body>
+
+</html>
